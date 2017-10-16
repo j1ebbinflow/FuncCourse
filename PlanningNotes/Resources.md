@@ -69,6 +69,7 @@ http://blog.danlew.net/2017/07/27/an-introduction-to-functional-reactive-program
 https://stackoverflow.com/questions/2867514/how-can-i-implement-a-tail-recursive-list-append/2867646#2867646
 https://stackoverflow.com/questions/3248091/f-tail-recursive-function-example?rq=1
 https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming
+http://slides.com/gsklee/functional-programming-in-5-minutes#/
 
 
 

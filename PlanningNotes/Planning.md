@@ -56,7 +56,37 @@ Each Topic will have:
         - Questions
 
 ### Topic 2: Functions
-
+    - Lecture Outline: 
+        - Title : All about the Func
+        - Talk outline: 
+            - Basic Values and types
+            - Collecton and pairing types: 
+                - Tuples, List, array, seq, map, set
+            - Functions
+                - Basic function
+                    - Indentation
+                    - Return values
+                    - function call
+                - Expressions
+                - IF expressions
+                - Pattern matching expressions and guards (Basic use, more for later)
+                - Type inference and automatic generalisation
+                - Currying
+                - Partial application
+                - Function values
+                - Lambda functions / anonymous functions
+                - First order functions
+                - Function composition
+                - Function Pipelining 
+                - Recursion & tail call optimisation
+        - Examples to use:
+            - Fizz buzz?
+            - Direction reduction? 
+            - Others?
+        - Exercise:
+            - Library functions? 
+        - Next Session:
+        - Questions?
 ### Topic 3: 
 ## Ideas and Projects
 - Small game
