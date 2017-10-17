@@ -69,7 +69,7 @@ Each Topic will have:
                     - function call
                 - Expressions
                 - IF expressions
-                - Pattern matching expressions and guards (Basic use, more for later)
+                - Pattern matching expressions and guards (Basic use, more for later), destructuring
                 - Type inference and automatic generalisation
                 - Currying
                 - Partial application
@@ -87,7 +87,12 @@ Each Topic will have:
             - Library functions? 
         - Next Session:
         - Questions?
-### Topic 3: 
+### Topic 3: Algebraic Data types / Pattern matching
+    - Pattern matching in this or split?
+    - Start with option and result, or basic record?
+    - Record destructuring
+
+
 ## Ideas and Projects
 - Small game
     - E.g. Asteroids
