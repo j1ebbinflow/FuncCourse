@@ -91,7 +91,49 @@ let squaresSeq = seq { for x in 0 .. 100 do yield x * x }
     Functions are values too! Let there be func!
 *)
 
-let 
+let exampleFunc x = x*x + 2 * x
+
+let quadratic a b c x = a * (x * x) + b * x + c
+
+let value = exampleFunc 12
+
+let quadValue = quadratic 2 3 4 10
+
+//let stringIsLong0 s = s.Length > 5
+let stringIsLong (s:string) = s.Length > 5
+
+let declareStuffReturnOne a b = 
+    let list = List.init a 
+    let (c,d) = b
+    1
+
+let sampleFunc x = 
+    if x < 10.0 then 
+        x * 2.0 - x / 1.5 + 50.0
+    else 
+        // 2
+        2.0
+
+(*Expressions*)
+
+(* Pattern matching basics*)
+
+(* Type inference *)
+
+(* And others 
+                - Function values
+                - Lambda functions / anonymous functions
+                - First order functions
+                - Currying
+                - Partial application
+                - Function composition
+                - Function Pipelining 
+                - Recursion & tail call optimisation
+                - Memoisation? 
+*)
+
+
+
 
 
 
