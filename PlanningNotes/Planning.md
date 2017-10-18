@@ -61,7 +61,7 @@ Each Topic will have:
         - Talk outline: 
             - Basic Values and types
             - Collecton and pairing types: 
-                - Tuples, List, array, seq, map, set
+                - Tuples, List, array, seq
             - Functions
                 - Basic function
                     - Indentation
@@ -71,11 +71,11 @@ Each Topic will have:
                 - IF expressions
                 - Pattern matching expressions and guards (Basic use, more for later), destructuring
                 - Type inference and automatic generalisation
-                - Currying
-                - Partial application
                 - Function values
                 - Lambda functions / anonymous functions
                 - First order functions
+                - Currying
+                - Partial application
                 - Function composition
                 - Function Pipelining 
                 - Recursion & tail call optimisation
