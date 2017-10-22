@@ -55,9 +55,9 @@ Each Topic will have:
         - Next Session - All about the Func
         - Questions
 
-### Topic 2: Functions
+### Topic 01: Basics of Values and Functions
     - Lecture Outline: 
-        - Title : All about the Func
+        - Title : Basics of Func
         - Talk outline: 
             - Basic Values and types
             - Collecton and pairing types: 
@@ -70,23 +70,24 @@ Each Topic will have:
                 - Expressions
                 - IF expressions
                 - Pattern matching expressions and guards (Basic use, more for later), destructuring
-                - Type inference and automatic generalisation
-                - Function values
-                - Lambda functions / anonymous functions
-                - First order functions
-                - Currying
-                - Partial application
-                - Function composition
-                - Function Pipelining 
-                - Recursion & tail call optimisation
-        - Examples to use:
-            - Fizz buzz?
-            - Direction reduction? 
-            - Others?
         - Exercise:
-            - Library functions? 
+            - 
         - Next Session:
         - Questions?
+### Topic 02: All about Functions
+    - Lecture Outline: 
+        - Title: All about the func
+        - Talk outline:
+            - Type inference basics
+            - Function values
+            - Lambda functions / anonymous functions
+            - First order functions
+            - Currying
+            - Partial application
+            - Function composition
+            - Function Pipelining 
+            - Recursion & tail call optimisation
+
 ### Topic 3: Algebraic Data types / Pattern matching
     - Pattern matching in this or split?
     - Start with option and result, or basic record?
