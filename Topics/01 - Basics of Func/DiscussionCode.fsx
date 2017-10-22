@@ -45,7 +45,8 @@ let catName = "Lyra"
 
 // String formatting and printing. 
 // If you use sprintf and printf and printfn, you get type checking on the parameters
-// The different patterns availalble for use can be found here: https://msdn.microsoft.com/en-us/visualfsharpdocs/conceptual/core.printf-module-[fsharp]
+// The different patterns availalble for use can be found here: 
+// https://msdn.microsoft.com/en-us/visualfsharpdocs/conceptual/core.printf-module-[fsharp]
 let theBirds = sprintf "The birds are %s and %s" "Jack" "Whiskey"
 
 printfn "We have %i animals. The cat is %s. %s" numberOfAnimals catName theBirds
