@@ -1,7 +1,8 @@
 (* 
     Note: 
         This file is best viewed in VS code or visual studio. though in visual studio, you will need to hover over a declaration to see the type.
-        It does seem like visual studio have a better colour highlighting
+        It does seem like visual studio have a better colour highlighting.
+        In Vscode, make sure you have Ionide installed
     Things Covered: 
     Values
         Integers, Floats, Strings
@@ -118,8 +119,6 @@ let chars = ['a' .. 'z']
     
     The general syntax is "for {element} in {range|list|array|sequence} do {expression that yields elements} "
 *)
-
-
 let squares = [ for x in evens do yield x * x ]
 
 // If you are yielding a single element, you an use the -> instead of do yield
