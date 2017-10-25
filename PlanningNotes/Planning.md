@@ -79,11 +79,13 @@ Each Topic will have:
         - Title: All about the func
         - Talk outline:
             - Type inference basics
-            - Function values
+            - Basic Function syntax
+            - First Class functions
             - Lambda functions / anonymous functions
-            - First order functions
+            - Higher order functions
             - Currying
             - Partial application
+            - Some List library functions
             - Function composition
             - Function Pipelining 
             - Recursion & tail call optimisation

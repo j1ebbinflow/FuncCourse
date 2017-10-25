@@ -5,31 +5,32 @@
     Things covered last time: 
         Values, Basic Data structures, Comprehensions, Basic function syntax, Basic Pattern Matching    
     Things Covered: 
-        Basic function syntax       
-        Function values
-        lambda functions     
-        First order functions
-        Currying
-        Partial Application
-        Some List Library functions
-        Function composition and pipelining
-        Recursion and tail call optimisation
-
-
+            - Type inference basics
+            - Basic Function syntax
+            - First Class functions
+            - Lambda functions / anonymous functions
+            - Higher order functions
+            - Currying
+            - Partial application
+            - Some List library functions
+            - Function composition
+            - Function Pipelining 
+            - Recursion & tail call optimisation
 *)
 
 (* Functions
     Functions are values too! Let there be func!
 *)
 
-// The simplest function is called the identity. 
-// We don't actually need to declare this, the library version is just "id"
-let identity x = x
-
 // Functions must return one type. No return statement is required.
 // Because we are using the multiplication operator, this function is infered to have the signature int -> int. 
 // I.e it takes a single in as input, and returns an int.
 let square x = x * x 
+
+// If a function has multiple lines, the final line is the return value. 
+let squareNumbersTo limit = 
+    let squared = [for x in 0 .. limit do yield square x]
+    squared
 
 // multiply is a function that takes in two ints and returns an int, so it is int -> int -> int
 let multiply x y = x * y
@@ -41,37 +42,40 @@ let add (x: int) (y: int) : int = x + y
 // Do this with brackets.
 let multipled = multiply (square 4) (add 12 33)
 
-// Functions can have many parameters 
-let quadratic a b c x = a * (x * x) + b * x + c
-
-let quadValue = quadratic 2 3 4 10
-
 //let stringIsLong0 s = s.Length > 5
 // Here we are required to declare s as being a string. 
 // This is because the compiler has no way to confirm that the input has a property Length otherwise
 let stringIsLong (s:string) : bool = s.Length > 5
 
-// If a function has multiple  lines, the final line is the return value. 
-let declareStuffReturnOne a = 
-    let list = [0 .. a]
-    let converted = [for x in list do yield x * x]
-    converted
+(*First class functions*)
 
-(*Function values and lambda functions*)
+// They are declared in the same way as values, as above. 
+
+// They can be assigned to values
+let multiplyAndAdd a b c =
+    let actionOne = multiply
+    let actionTwo = add
+    actionTwo (actionOne a b) c
+
+// They can be stored in data structures, and they can be declared in other functions
+
+let executeSeparateFunctions input = 
+    let add10 x = x + 10
+    let functions = [add10; square]
+    [for func in functions do yield func input]
+
+(*Lambda (Anonymous) functions
+    If necessary, we can declare them without a name
+*)
+
 //The following are the same:
 
 let square1 = fun x -> x * x
 let square2 x = x * x
 
-//This is not:
-//I wonder how we can use this later?...
-let square3() = fun x ->  x * x
-
-let func = square3 () 4
-(*First order functions*)
-
-//Function as parameter
-// Automatic generalisation
+(*Higher order functions
+    Functions can be parameters to other functions
+*)
 let mapRange mapper start finish = 
     let range = [start .. finish]
     [for x in  range do yield mapper x]
@@ -96,7 +100,6 @@ let fizzBuzzed = mapRange fizzBuzzTest 0 100
     functions, which take one input in a set of values called the domain and map them
     to the set of values called the range
     (One input, one output)
-
 *)
 
 let getExpSeriesNoCurry(power, limit) = 
@@ -108,10 +111,7 @@ let getExpSeries power limit =
 let getExpSeriesManualCurry = 
     fun power -> 
         fun limit -> 
-            limit
-
-let quadratic2 a b c x = a * (x * x) + b * x + c
-
+            mapRange (fun x -> pown x power) 0 limit
 
 (*Partial Application
     Fix some of the parameters of a function and get a function that takes the remaining parameters
@@ -120,6 +120,14 @@ let quadratic2 a b c x = a * (x * x) + b * x + c
 let noCurrySeries = getExpSeriesNoCurry (2, 10)
 
 let getSquares = getExpSeries 2
+
+let squaresOfNumbersTo20 = getSquares 20
+
+let quadratic a b c x = a * (x * x) + b * x + c
+
+let quadValue = quadratic 2 3 4 10
+
+let partialQuad = quadratic 2 4 3
 
 //Importance of parameter order
 
@@ -142,9 +150,7 @@ let numbersBelow100ToStrings = mapPositivesBelow100 (fun x -> x.ToString())
 //We can see this choice a lot in library functions
 //Introducing List library functions (A lot of them are similar for array and seq (But potentially with slightly different behaviours))
 
-
 let numbersTimes2 = List.map (fun x -> x * 2) [0..100]
-
 
 //Can partially apply operators as well (They are just functions too)
 let numbersPlus2 = List.map ((+)2) [0 .. 100] 
@@ -174,11 +180,13 @@ let shiftNumbersAndSumOdds' shiftBy list =
 //Lets say we want a composition function. How should it combine 2 functions and a value? 
 // let F x y z = x y z ??
 
-
-
-
 //Hint: Function application is normally left associative
 let composeQuestion f g x = "TODO"
+
+
+
+
+
 
 
 
@@ -238,27 +246,96 @@ let shiftNumbersAndSumEvensPiped shiftBy list =
     |> List.filter (not << oddPredicate)
     |> List.sum
 
-let evenNumberNotGreaterThan100 x = not <| (fun num -> num > 100) x
+let greaterThan100 x = x > 100
 
-(*Recursion and Tail Call optimisaton*)
+let notGreaterThan100 x = not (greaterThan100 x)
 
-let rec fact x =
+let notGreaterThan100' x = not <| greaterThan100 x
+
+let (<|+) f x= f x
+
+let evenNumberNotGreaterThan100 x = not <|+ greaterThan100 x
+
+(*Recursion
+    Recursion always requires having a base case and recursive case
+*)
+
+let rec factorial x =
     if x < 1 then 1
-    else x * fact (x - 1)
+    else x * factorial  (x - 1)
 
-let rec isPowerOf exponent target = 
-    match target with
-    | _ when target < 1 -> false
-    | 1 -> true
-    | _ -> if target % exponent = 0 then isPowerOf exponent (target / exponent) else false
+let rec factorial' x = 
+    match x with
+    | x when x < 1 -> 1
+    | x -> x * factorial  (x - 1)
 
-let rec fib x = ""
+let rec factorial'' = function
+    | x when x < 1 -> 1
+    | x -> x * factorial  (x - 1)
 
 let rec sumList list = ""
 
-let rec mapList list = ""
 
-let reduceDir (ls : string list) = ""
+
+
+
+
+
+
+
+
+
+
+
+let rec sumList list =
+    match list with
+    | [] -> 0
+    | head::rest -> head + sumList rest
+
+let rec naiveFibonacciNumber x = x
+
+
+
+
+
+
+
+
+
+
+
+
+
+let rec fib x = 
+    if x < 2 then 
+        1 
+    else 
+        fib (x-2) + fib(x-1)
+
+let rec fib' x = 
+    match x with
+    | 0 -> 0
+    | 1 ->  1
+    | n -> fib'(n - 1) + fib'(n - 2)    
+
+
+let test = "The quick brown fox jumps over the lazy dog"
+let panagram inputString = true
+
+
+
+
+
+
+
+
+
+
+
+let panagram' = List.forall  (string >> test.Contains) ['a' .. 'z']
+
+
+let rec panagramRec inputString = true
 
 let test () = 
 
@@ -267,14 +344,42 @@ let test () =
     let result = reduceDir a
 
     result
-//Next time?
-
-//Data types, further pattern matching
 
 
 
 
 
+
+
+
+
+let reduceDir' (ls : string list) =
+    let doesReduce dir1 dir2 =
+        match dir1, dir2 with 
+        | "NORTH","SOUTH" -> true
+        | "SOUTH","NORTH" -> true
+        | "WEST","EAST" -> true
+        | "EAST","WEST" -> true
+        | _,_ -> false
+
+    let rec reduce inputList resultList = 
+        match inputList,resultList with 
+        | i::rest,[] -> reduce rest [i]
+        | current::inputRest,last::resultRest -> 
+            if doesReduce last current then
+                reduce inputRest resultRest
+            else 
+                reduce inputRest (current::resultList)
+        | [], result -> List.rev result        
+    reduce ls []
+
+(*Next time:
+    Tail Call optimisaton
+    Algebraic data types
+    Further pattern matching
+    Option and Result 
+    Immutability?
+*)
 
 
 
