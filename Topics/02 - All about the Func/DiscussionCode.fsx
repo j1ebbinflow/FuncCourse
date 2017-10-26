@@ -45,7 +45,7 @@ let multipled = multiply (square 4) (add 12 33)
 //let stringIsLong0 s = s.Length > 5
 // Here we are required to declare s as being a string. 
 // This is because the compiler has no way to confirm that the input has a property Length otherwise
-let stringIsLong (s:string) : bool = s.Length > 5
+let stringIsLong (s:string) = s.Length > 5
 
 (*First class functions*)
 
@@ -76,12 +76,12 @@ let square2 x = x * x
 (*Higher order functions
     Functions can be parameters to other functions
 *)
-let mapRange mapper start finish = 
+let mapRange' mapper start finish = 
     let range = [start .. finish]
-    [for x in  range do yield mapper x]
+    [for x in range do yield mapper x]
 
 // Lambda  function! (Anonymous function)
-let stuff = mapRange (fun x -> x.ToString()) 10 20
+let stuff = mapRange' (fun x -> x.ToString()) 10 20
 
 let fizzBuzzTest number =
     match number with
@@ -90,7 +90,7 @@ let fizzBuzzTest number =
     | n when n % 3 = 0 -> "Fizz"
     | n -> sprintf "%i" n
 
-let fizzBuzzed = mapRange fizzBuzzTest 0 100
+let fizzBuzzed = mapRange' fizzBuzzTest 0 100
 
 (*Currying
     Why Currying? 
@@ -103,15 +103,15 @@ let fizzBuzzed = mapRange fizzBuzzTest 0 100
 *)
 
 let getExpSeriesNoCurry(power, limit) = 
-    mapRange (fun x -> pown x power) 0 limit
+    mapRange' (fun x -> pown x power) 0 limit
 
 let getExpSeries power limit = 
-    mapRange (fun x -> pown x power) 0 limit
+    mapRange' (fun x -> pown x power) 0 limit
 
 let getExpSeriesManualCurry = 
     fun power -> 
         fun limit -> 
-            mapRange (fun x -> pown x power) 0 limit
+            mapRange' (fun x -> pown x power) 0 limit
 
 (*Partial Application
     Fix some of the parameters of a function and get a function that takes the remaining parameters
@@ -125,11 +125,15 @@ let squaresOfNumbersTo20 = getSquares 20
 
 let quadratic a b c x = a * (x * x) + b * x + c
 
-let quadValue = quadratic 2 3 4 10
+let partialQuad = quadratic 1 2 3
 
-let partialQuad = quadratic 2 4 3
+let plotData = [for x in -50 .. 50 do yield (x, partialQuad x)]
 
 //Importance of parameter order
+
+let mapRange mapper start finish = 
+    let range = [start .. finish]
+    [for x in  range do yield mapper x]
 
 let rangeToStrings = mapRange (fun x -> x.ToString()) 
 
@@ -159,6 +163,8 @@ let odds = List.filter (fun x -> x % 2 <> 0) numbersPlus2
 
 let sumOfOdds = List.reduce (+) odds
 
+let sumOfOdds' = List.fold (+) 0 odds 
+
 //Lets make a function out of this for the next section: 
 let shiftNumbersAndSumOdds shiftBy list =         
     let shiftedNumbers = List.map ((+)shiftBy) list
@@ -181,7 +187,7 @@ let shiftNumbersAndSumOdds' shiftBy list =
 // let F x y z = x y z ??
 
 //Hint: Function application is normally left associative
-let composeQuestion f g x = "TODO"
+let composeQuestion f g x = g(f (x)) 
 
 
 
@@ -252,9 +258,33 @@ let notGreaterThan100 x = not (greaterThan100 x)
 
 let notGreaterThan100' x = not <| greaterThan100 x
 
-let (<|+) f x= f x
+let (<|+) f x = f x
 
-let evenNumberNotGreaterThan100 x = not <|+ greaterThan100 x
+let evenNumberNotGreaterThan100 x = not <| greaterThan100 x
+
+let test = "The quick brown fox jumps over the lazy dog"
+
+let chars = ['a' .. 'z']
+let panagram inputString = "true"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let panagram' =
+    ['a' .. 'z']
+    |> List.map (string >> test.Contains) 
+    |> List.reduce (&&) 
+
 
 (*Recursion
     Recursion always requires having a base case and recursive case
@@ -273,26 +303,11 @@ let rec factorial'' = function
     | x when x < 1 -> 1
     | x -> x * factorial  (x - 1)
 
-let rec sumList list = ""
-
-
-
-
-
-
-
-
-
-
-
-
-
-let rec sumList list =
-    match list with
-    | [] -> 0
-    | head::rest -> head + sumList rest
-
-let rec naiveFibonacciNumber x = x
+let rec naiveFibonacciNumber x = 
+    match x with 
+    | 0 -> 0
+    | 1 -> 1
+    | x -> naiveFibonacciNumber (x-1) + naiveFibonacciNumber(x-2) 
 
 
 
@@ -319,62 +334,9 @@ let rec fib' x =
     | n -> fib'(n - 1) + fib'(n - 2)    
 
 
-let test = "The quick brown fox jumps over the lazy dog"
-let panagram inputString = true
-
-
-
-
-
-
-
-
-
-
-
-let panagram' = List.forall  (string >> test.Contains) ['a' .. 'z']
-
-
-let rec panagramRec inputString = true
-
-let test () = 
-
-    let a = ["NORTH";"SOUTH";"SOUTH";"EAST";"WEST";"NORTH";"NORTH";"WEST";"SOUTH"]
-
-    let result = reduceDir a
-
-    result
-
-
-
-
-
-
-
-
-
-let reduceDir' (ls : string list) =
-    let doesReduce dir1 dir2 =
-        match dir1, dir2 with 
-        | "NORTH","SOUTH" -> true
-        | "SOUTH","NORTH" -> true
-        | "WEST","EAST" -> true
-        | "EAST","WEST" -> true
-        | _,_ -> false
-
-    let rec reduce inputList resultList = 
-        match inputList,resultList with 
-        | i::rest,[] -> reduce rest [i]
-        | current::inputRest,last::resultRest -> 
-            if doesReduce last current then
-                reduce inputRest resultRest
-            else 
-                reduce inputRest (current::resultList)
-        | [], result -> List.rev result        
-    reduce ls []
 
 (*Next time:
-    Tail Call optimisaton
+    Tail Recursion and Tail call optimisaton
     Algebraic data types
     Further pattern matching
     Option and Result 

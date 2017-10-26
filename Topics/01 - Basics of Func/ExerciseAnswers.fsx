@@ -23,25 +23,28 @@
 *)
 
 //Change this to the name we have too many of
-let nameWeHaveTooManyOf = ""
+let nameWeHaveTooManyOf = "Matt"
 
 // Change this to declare the number of Matts in the office
-let numberOfMatts = 0
+let numberOfMatts = 4
 
 // Calculate the percentage of matts in the office
 // You can cast using: float 0 or just use 0.0 to use a float instead
-let percentageOfMatts = 0
+let percentageOfMatts = 4.0 / 40.0
 
 // Use sprintf to make a formatted string about the number and percentage of matts in the office
-let commentAboutToManyMatts = ""
+let commentAboutToManyMatts = sprintf "We have %i %ss. That is %f percent of the office" numberOfMatts nameWeHaveTooManyOf percentageOfMatts
 
 // Use the range list comprehension to generate a decreasing list of odd numbers below 100
 // Hint: You will need to include a step
-let decreasingOddNumbers = []
+let decreasingOddNumbers = [99 .. -2 .. 0] 
 
 // Use the generator syntax to create a array of numbers below 1000 containing 3
 // Note, When you call the ToString() of a number, you will have to leave a space in between, like: 100 .ToString()
-let numbersWithThreeInThemBelow1000 = [||]
+let numbersWithThreeInThemBelow1000 = 
+    [|for x in 0 .. 1000 do 
+        if x.ToString().Contains(3 .ToString()) then 
+            yield x|]
 
 (*
     Using pattern matching and the sequence generator syntax, create a lazily generated series starting from 0 to 1000000
@@ -52,24 +55,35 @@ let numbersWithThreeInThemBelow1000 = [||]
 
     You will need to use yield! (yield bang)
 
-    To Test this use Seq.take {numberOfElements}. See below.
+    To Test this use Seq.take {numberOfElements} . See below.
 *)
-let numbersTensAndHundreds = seq { yield 0 }
+let numbersTensAndHundreds = seq { 
+    for x in 0 ..1000000 do 
+        match x with 
+        | 0 -> yield 0 
+        | multipleOfTen when x % 10 = 0 -> yield multipleOfTen
+        | x -> yield! [x; x*10; x*100]
+ }
 
 //Note, with Seq.take, if the sequence doesn't have enough elements, it will give an error
-let first100 = Seq.take 100 numbersTensAndHundreds
+let first100 = Seq.toList (numbersTensAndHundreds) 
 
 // Create a function that returns (a + b) / c
-let calculate a b c = 0
+let calculate a b c = (a + b) / c
 
-// Create a function that returns the max of the 4 inputs. 
-let max4 a b c d = 0
+// Create a function that returns the max of the 4 inputs.
+let max4 a b c d = 
+    let maxAb = if a > b then a else b
+    let maxCb = if c > d then c else d
+    if maxAb > maxCb then maxAb else maxCb
 
 // Create a function that returns a list of tuples, with the first tuple containing the
 // higher two numbers, and the second containing the lowest two. Both pairs should have the 
 // higher number first. 
-// Decide what to do in special cases
-let pairNumbers a b c d = []
+// Decide what to do in special cases  4 7 5 9  -> 7 4 6 2
+let pairNumbers a b c d = 
+    let [one; two; three; four] = List.sort [a;b;c;d]
+    [(one,two); (three,four)]
 
 // Create a function that is a more generic version of fizz buzz.
 
@@ -77,7 +91,14 @@ let pairNumbers a b c d = []
 // If the number doesn't match any conditions, return the number to string. 
 // If the number is a multiple of multipleOfA, return stringIfMultipleOfA
 // If the number is a multiple of multipleOfB, return stringIfMultipleOfB
-let genericFizzBuzz (multipleOfA, stringIfMultipleOfA: int*string) (multipleOfB, stringIfMultipleOfB: int*string) start finish = []
+
+let genericFizzBuzz (multipleOfA, stringIfMultipleOfA) (multipleOfB, stringIfMultipleOfB) start finish = 
+    [ for x in start .. finish do
+        match x with
+        | n when n % multipleOfA = 0 && n % multipleOfB = 0 -> yield (sprintf "%s%s" stringIfMultipleOfA stringIfMultipleOfB)
+        | n when n % multipleOfA = 0 -> yield stringIfMultipleOfA
+        | n when n % multipleOfB = 0 -> yield stringIfMultipleOfB 
+        | x -> yield (sprintf "%i" x) ]
 
 
 
