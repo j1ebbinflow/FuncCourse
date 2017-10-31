@@ -1,32 +1,23 @@
 
-let rec sumList list = ""
+(*Mutual Recursion
+    In response to a question from last session: 
+*)
 
+let rec doSomething x = 
+    doSomeThingElse x
+and doSomeThingElse x = 
+    doSomething x
 
-
-
-
-
-
-
-
-
-
-
-
+(*Tail Recursion*)
 let rec sumList list =
     match list with
     | [] -> 0
     | head::rest -> head + sumList rest
 
+let directions = ["NORTH";"SOUTH";"SOUTH";"EAST";"WEST";"NORTH";"NORTH";"WEST";"SOUTH"]
 
+let reduceDir x = []
 
-let test () = 
-
-    let a = ["NORTH";"SOUTH";"SOUTH";"EAST";"WEST";"NORTH";"NORTH";"WEST";"SOUTH"]
-
-    let result = reduceDir a
-
-    result
 
 
 
