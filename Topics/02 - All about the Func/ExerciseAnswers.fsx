@@ -145,17 +145,16 @@ let getDoublesOfPositives = List.filter (fun x -> x > 0) >> List.map ((*) 2)
 *)
 let doABunchOfMathsStuff list = 
     // Assumes list is not empty.
-   let sumAndSquareRoot = List.sum >> float >> Math.Sqrt
-   let keyAndRoots = 
-       list 
-       |> groupByFinalDigit'
-       |> List.map (fun (key,elements) -> 
+    let sumAndSquareRoot = List.sum >> float >> Math.Sqrt
+    let keyAndRoots = 
+        list 
+        |> groupByFinalDigit'
+        |> List.map (fun (key,elements) -> 
             if key % 2 = 0 then
-                key, getSquaresOfPositives elements
+                key,  elements |> getSquaresOfPositives |> sumAndSquareRoot
             else 
-                key, getDoublesOfPositives elements)
-       |> List.map (fun (key,elements) -> key, sumAndSquareRoot elements)
-   keyAndRoots |> List.fold (fun (max, min) (key, root) ->
+                key,  elements |> getDoublesOfPositives |> sumAndSquareRoot)
+    keyAndRoots |> List.fold (fun (max, min) (key, root) ->
         let newMax = if root > snd max then (key, root) else max
         let newMin = if root < snd min then (key, root) else min
         (newMax, newMin)) (keyAndRoots.Head, keyAndRoots.Head)
