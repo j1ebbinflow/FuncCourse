@@ -9,11 +9,6 @@ and doSomeThingElse x =
     doSomething x
 
 (*Tail Recursion*)
-let rec sumList list =
-    match list with
-    | [] -> 0
-    | head::rest -> head + sumList rest
-
 let directions = ["NORTH";"SOUTH";"SOUTH";"EAST";"WEST";"NORTH";"NORTH";"WEST";"SOUTH"]
 
 let reduceDir x = []
@@ -47,3 +42,9 @@ let reduceDir' (ls : string list) =
         | [], result -> List.rev result        
     reduce ls []
 
+(*Caching via closures*)
+
+
+(*Memoisation via closures*)
+
+(*Active Patterns*)
