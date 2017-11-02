@@ -89,12 +89,6 @@ let rec reduceList reducer list =
     | [] -> invalidArg "list" "Cannot perform reduce on empty list"
     | head::tail -> foldList reducer head tail
 
-
-// List comprehension / Generator for other data structures
-
-let mapArrayGenerator mapping list = 
-    [for a in list do yield mapping a]
-
 // Tail Recursion
 
 let rec mapListBasic2 mapping list =  
