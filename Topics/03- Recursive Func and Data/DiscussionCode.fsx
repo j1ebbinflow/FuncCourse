@@ -14,24 +14,6 @@ let rec factorial x =
     if x < 1 then 1
     else x * factorial  (x - 1)
 
-let rec factorialTail' x = 0
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 let factorialTail x = 
