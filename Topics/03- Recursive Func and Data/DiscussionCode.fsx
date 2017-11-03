@@ -16,12 +16,6 @@ let rec factorial x =
 
 
 
-let factorialTail x = 
-    let rec factorialT total n = 
-        match n with 
-        | 0 -> total
-        | n -> factorialT (total*n) (n-1)        
-    factorialT 1 x    
 
 
 
@@ -44,12 +38,6 @@ let fibTailR x = 0
 
     
 
-let fibTail x = 
-    let rec fibT value1 value2 fibNumber = 
-        match fibNumber with
-        | 0 -> value1
-        | fibNumber -> fibT value2 (value1 + value2) (fibNumber - 1)
-    fibT 0 1 x    
 
 let directions = ["NORTH";"SOUTH";"SOUTH";"EAST";"WEST";"NORTH";"NORTH";"WEST";"SOUTH"]
 // https://www.codewars.com/kata/550f22f4d758534c1100025a
