@@ -9,7 +9,7 @@ let rec fib x =
     else 
         fib (x-2) + fib(x-1)
 
-//Rewrite the fibonacci function in a tail recursive manner
+//Rewrite the fibonacci function in a tail recursive manner (Only try continuation passing if you feel like it)
 let rec fibTail x = 0    
 
 // Solve this code wars problem recursively: // https://www.codewars.com/kata/550f22f4d758534c1100025a
@@ -17,7 +17,8 @@ let exampleDirections = ["NORTH";"SOUTH";"SOUTH";"EAST";"WEST";"NORTH";"NORTH";"
 
 let reduceDir x = []
 
-// ReImplement the library functions using recusion. modify the signature as necessary (Try the continuation passing style!)
+// ReImplement the library functions using recusion. modify the signature as necessary 
+// (Only try continuation passing if you feel like it, its probably easier to do this using an accumulator)
 // Use a seperate value so that you can compare to the real signature 
 let functionToCopy = List.groupBy
 
