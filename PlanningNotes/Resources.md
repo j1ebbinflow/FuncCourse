@@ -70,7 +70,8 @@ https://stackoverflow.com/questions/2867514/how-can-i-implement-a-tail-recursive
 https://stackoverflow.com/questions/3248091/f-tail-recursive-function-example?rq=1
 https://maryrosecook.com/blog/post/a-practical-introduction-to-functional-programming
 http://slides.com/gsklee/functional-programming-in-5-minutes#/
-
+http://www.markhneedham.com/blog/2009/06/22/f-continuation-passing-style/
+https://stackoverflow.com/questions/3248091/f-tail-recursive-function-example
 
 
 
