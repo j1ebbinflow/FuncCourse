@@ -67,6 +67,28 @@ let reduceDir' (ls : string list) =
 // Use a seperate value so that you can compare to the real signature 
 let functionToCopy = List.groupBy
 
+let groupBy' projection inputList = 
+    let addToMapList currentMap key value = 
+        match Map.tryFind key currentMap with
+        | None -> Map.add key [value] currentMap
+        | Some list -> Map.add key (value::list) currentMap
+
+    let rec grouper currentMap list = 
+        match list with
+        | [] -> currentMap
+        | head::tail -> 
+            let key = projection head
+            let newMap = addToMapList currentMap key head
+            grouper newMap tail
+
+    inputList
+    |> grouper Map.empty      
+    |> Map.toList
+    
+let test = groupBy' (fun x -> (x % 10).ToString()) [0..30]
+
+///////////
+
 let functionToCopy2 = List.collect
 
 let functionToCopy3 = List.windowed
