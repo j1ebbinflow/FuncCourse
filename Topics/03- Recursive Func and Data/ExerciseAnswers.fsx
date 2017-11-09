@@ -12,6 +12,7 @@ let factorialTail x =
     factorialT 1 x  
 
 //Rewrite the factorial function in a tail recursive manner, using continuation passing
+//Talk about confirming how continuation passing works
 let factorial' x =
     let rec loop cont n = 
         match n with
@@ -33,6 +34,7 @@ let fibTail x =
         | fibNumber -> fibT value2 (value1 + value2) (fibNumber - 1)
     fibT 0 1 x   
 
+//The code below doesn't work yet, leaving it in as discussion point
 let fib' x = 0
     // let rec loop cont fib1 fib2 fibIndex = 
     //     match fibIndex with
