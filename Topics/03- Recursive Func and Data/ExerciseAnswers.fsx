@@ -89,25 +89,90 @@ let test = groupBy' (fun x -> (x % 10).ToString()) [0..30]
 
 ///////////
 
-let functionToCopy2 = List.collect
+let functionToCopy2 = List.collect (fun x -> [x; x*x;x*x*x]) [0..10]
+
+let collect''' mapper list = 
+    list
+    |> List.map mapper
+    |> List.concat
+
+let collect'' mapper list = 
+    let rec collector inputList output = 
+        match inputList with
+        | [] -> output
+        | head::tail -> collector tail (output @ mapper head)
+    collector list []   
+
+let collect' mapper list = 
+    let rec collector inputList output = 
+        match inputList with
+        | [] -> output |> List.rev |> List.concat 
+        | head::tail -> collector tail (mapper head::output)
+    collector list []    
+
+let result = collect' (fun x -> [x; x*x;x*x*x]) [0..10]
 
 let functionToCopy3 = List.windowed
 
+let windowed' windowSize (list: 'a list) : 'a list list= 
+    if windowSize > 0 then 
+        let rec windower inputList output remainingStarts = 
+            match remainingStarts with
+            | starts when starts < 0 -> output |> List.rev
+            | starts -> windower (List.tail inputList) (List.take windowSize inputList::output) (starts-1)
+        let finalWindowStart = list.Length - windowSize
+        if finalWindowStart >= 0 then
+            windower list [] finalWindowStart  
+        else 
+            []             
+    else 
+        raise <| System.ArgumentException("The input must be positive")    
 
+open System
 // Using sequences, generate numbers using the transformation y = sin(x) + log(x) and the range beteen start and finish (inclusive) with a step
-let generator start finish step = "TODO"
+let generator start step finish  =
+    [for x in start .. step .. finish do yield (Math.Sin (x) + Math.Log10 (x))]
 
 // Using recursion, manually create a generator for a sequence of numbers using the transformation  y = sin(x) + log(x)
 // Don't use sequences!
 // This should require a series of function calls by the user to build up the sequence. 
 // Remember that you need some way to tell the function caller that there are no more values in the sequence. 
 
-let generator' start finish step = "TODO"
+let generator' start step finish = 
+    let transform x = Math.Sin x + Math.Log x
+    let mutable current = start     
+    let nextFunc ()= transform current
+    let next () = 
+        let value = nextFunc ()
+        current <- current + step
+        if current = finish then
+            value,false
+        else 
+            value,true
+    next
+
 
 // Generalise the function above so that it can work on any transformation function.
 // You will need to modify the signature as well. 
-let generator'' start finish step = "TODO"
+let generator'' (start: int) (step: int) (finish: int) (transform: int -> 'a) : unit -> 'a*bool = 
+    let mutable current = start     
+    let nextFunc ()= transform current
+    let next () = 
+        let value = nextFunc ()
+        current <- current + step
+        if current = finish then
+            value,false
+        else 
+            value,true
+    next
 
 // Generalise the function above further so that it can produce an infinite series
 // You will need to modify the signature as well. 
-let generator''' start finish step = "TODO"
+let generator''' (start: int) (step: int) (transform: int -> 'a) : unit -> 'a = 
+    let mutable current = start     
+    let nextFunc ()= transform current
+    let next () = 
+        let value = nextFunc ()
+        current <- current + step
+        value
+    next
