@@ -4,7 +4,7 @@
 let square1 = fun x -> x * x
 let square2 x = x * x
 
-let peopleWithFirstNamesWeHaveEnoughOf = 
+let people = 
     ["Matthew One"; "Matthew Two"; "Matthew Three"; "Matthew Four";
         "John One"; "John Two";
         "Steven One"; "Stephen Two";
