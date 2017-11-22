@@ -3,7 +3,7 @@
 *)
 
 (* 
-    Types that we've already talked about
+    Types that we've already talked about (Refresher. New stuff starts at type abreviations)
 *)
 
 (*
@@ -12,11 +12,6 @@
 *)
 
 let thisIs : unit = ()
-open Microsoft.Win32.SafeHandles
-open System
-open System.Runtime.InteropServices
-open System.Collections.ObjectModel.ReadOnlyDictionary
-open System.Collections.ObjectModel.ReadOnlyDictionary
 
 let printPositiveOrNegative x = 
     if x > 0 then
@@ -166,7 +161,7 @@ type Animal = { Name : string; Age : int }
 //When there is a naming conflict, the most recent declaration will be used, or a warning will be shown. 
 //In this case, we can specify which one we are looking to use: 
 
-let whiskey = { Animal.Name = "Whiskey"; Age = 1 }
+let whiskey : Person = { Name = "Whiskey"; Age = 1 }
 
 //Copy and Update
 // Manual
@@ -212,6 +207,55 @@ let printSign x =
     | Positive value -> printfn "Positive number: %i" value
     | Negative value -> printfn "Negative number: %i" value
     | Zero -> printfn "Value is zero"
+
+(*
+    Unlike type aliases, a single DUs can be used for Type safety
+    (The pattern below is common)
+*)
+
+type BadPhoneNumber = int
+type BadHouseNumber = int
+
+let badPrintPhoneNumber (number:BadPhoneNumber) = 
+    printfn "%i" number
+
+let house : BadHouseNumber = 12
+
+badPrintPhoneNumber house
+
+type PhoneNumber = PhoneNumber of int 
+type HouseNumber = HouseNumber of int
+
+// Deconstructing in parameter
+let printPhoneNumber (PhoneNumber num) = 
+    printfn "%i" num
+
+let houseNumber = HouseNumber 12
+
+printPhoneNumber houseNumber
+
+// The following DUs are so common they already exist in the F# Libraries
+type MyOption<'a> =
+    | Some of 'a
+    | None
+
+type  MyResult<'a,'b> = 
+    | Ok of 'a
+    | Error of 'b
+
+let positiveList = [0..10]
+
+let value = positiveList |> List.tryFind (fun x -> x = -1)
+
+open System 
+let private tryParseWith tryParseFunc (s : string) =
+    match (tryParseFunc s) with
+    | true, x -> Ok x
+    | false, _ -> Error (sprintf "%s is not capable of being parsed." s)
+
+let parseDateTimeOffset = tryParseWith DateTimeOffset.TryParse 
+
+
 
 
 
